@@ -1,0 +1,20 @@
+
+#PHPmyadmin on amd64
+docker run --name phpmyadmin -d -e PMA_ARBITRARY=1 -e PMA_HOST=127.0.0.1 -p 8080:80 phpmyadmin/phpmyadmin
+
+#phpmyadmin on arm -oracle cloud 
+docker run --name phpmyadmin -d -e PMA_ARBITRARY=1 -e PMA_HOST=127.0.0.1 -p 8080:80 arm64v8/phpmyadmin
+
+## for ghost cms to use
+docker volume create ghost_next_data
+
+ docker run -d \
+  	--name next-ghost \
+  	-e NODE_ENV=development \
+	-e url=https://myapp.test.com \
+  	-e database__connection__filename='/var/lib/ghost/content/data/ghost.db' \
+  	-p 3001:2368 \
+  	-v ghost_next_data:/var/lib/ghost/content \
+  	arm64v8/ghost:alpine
+
+
